@@ -97,12 +97,6 @@ export default createStore({
     async newSong({ commit, state, dispatch }, _song) {
       commit('newSong', _song);
 
-      // while (state.sound.playing()) {
-      //   console.log('seek update');
-      //   state.seek = state.sound.seek();
-      //   // requestAnimationFrame(dispatch('progress'));
-      // }
-
       state.sound.on('play', () => {
         dispatch('progress');
       });
