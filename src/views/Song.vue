@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 <template>
   <!-- Music Header -->
   <section class="w-full mb-8 py-14 text-center text-white relative">
@@ -60,8 +61,6 @@
   <ul class="container mx-auto">
     <comment-component v-for="comment in sortedComments" :key="comment.docID"
       :comment="comment"/>
-    <!-- <li class="p-6 bg-gray-50 border border-gray-200">
-    </li> -->
   </ul>
 </template>
 
@@ -70,7 +69,6 @@ import {
   songsCollection, auth, commentsCollection, usersCollection,
 } from '@/includes/firebase';
 import store from '@/store/index';
-// import { mapActions } from 'vuex';
 import CommentComponent from '@/components/Comment.vue';
 
 export default {
@@ -106,7 +104,6 @@ export default {
     },
   },
   methods: {
-    // ...mapActions(usePlayerStore, ['newSong']),
     newSong(_song) {
       store.dispatch('newSong', _song);
     },
@@ -144,23 +141,19 @@ export default {
       this.comments = [];
 
       snapshots.forEach((doc) => {
-        const userName = this.getName(doc.data().uid);
-
         this.comments.push({
           docID: doc.id,
           ...doc.data(),
-          userName,
         });
       });
-    },
-    async getName(_uid) {
-      console.log(_uid);
-      const userSnapshot = await usersCollection.doc(_uid).get();
-      console.log(userSnapshot.data());
 
-      const userName = userSnapshot.data().name;
-
-      return userName;
+      // eslint-disable-next-line no-restricted-syntax
+      for (const comment of this.comments) {
+        // eslint-disable-next-line no-await-in-loop
+        const userSnapshot = await usersCollection.doc(comment.uid).get();
+        const userName = userSnapshot.data().name;
+        comment.userName = userName;
+      }
     },
   },
   watch: {
