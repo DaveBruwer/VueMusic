@@ -11,6 +11,7 @@ export default createStore({
     sound: {},
     seek: '00:00',
     duration: '00:00',
+    playerProgress: '0%',
   },
   mutations: {
     toggleAuthModal: (state) => {
@@ -26,8 +27,6 @@ export default createStore({
         src: [song.url],
         html5: true,
       });
-
-      state.duration = helper.formatTime(state.sound.duration());
 
       state.sound.play();
     },
@@ -54,6 +53,8 @@ export default createStore({
     },
     seek: (state) => state.seek,
     duration: (state) => state.duration,
+    playerProgress: (state) => state.playerProgress,
+    currentSong: (state) => state.current_song,
   },
   actions: {
     async register({ commit }, payload) {
@@ -92,7 +93,15 @@ export default createStore({
       commit('toggleAuth');
     },
     async newSong({ commit, state, dispatch }, _song) {
+      if (state.sound instanceof Howl) {
+        state.sound.unload();
+      }
+
       commit('newSong', _song);
+
+      const songUser = await usersCollection.doc(state.current_song.uid).get();
+
+      state.current_song.display_name = songUser.data().name;
 
       state.sound.on('play', () => {
         dispatch('progress');
@@ -104,6 +113,8 @@ export default createStore({
     progress({ state, dispatch }) {
       state.seek = helper.formatTime(state.sound.seek());
       state.duration = helper.formatTime(state.sound.duration());
+
+      state.playerProgress = `${(state.sound.seek() / state.sound.duration()) * 100}%`;
 
       if (state.sound.playing()) {
         requestAnimationFrame(() => { dispatch('progress'); });
