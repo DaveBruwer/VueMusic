@@ -2,7 +2,7 @@
 <li class="p-6 bg-gray-50 border border-gray-200">
     <!-- Comment Author -->
     <div class="mb-5">
-    <div class="font-bold">{{comment.uid}}</div>
+    <div class="font-bold">{{comment.userName}}</div>
     <time>{{lapsedTime}} days ago</time>
     </div>
 
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'comment-component',
   props: {

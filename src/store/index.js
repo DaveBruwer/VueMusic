@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import { auth, usersCollection } from '@/includes/firebase';
 import { Howl } from 'howler';
+import helper from '@/includes/helper';
 
 export default createStore({
   state: {
@@ -19,7 +20,6 @@ export default createStore({
       state.userLoggedIn = !state.userLoggedIn;
     },
     newSong(state, song) {
-      console.log('newSong triggered');
       state.current_song = song;
 
       state.sound = new Howl({
@@ -27,10 +27,7 @@ export default createStore({
         html5: true,
       });
 
-      state.duration = state.sound.duration();
-
-      console.log(state.sound.duration());
-      console.log(state.sound.seek());
+      state.duration = helper.formatTime(state.sound.duration());
 
       state.sound.play();
     },
@@ -105,15 +102,11 @@ export default createStore({
       commit('toggleAudio');
     },
     progress({ state, dispatch }) {
-      console.log('progress start');
-
-      state.seek = state.sound.seek();
-      state.duration = state.sound.duration();
-
-      console.log(state.sound.playing());
+      state.seek = helper.formatTime(state.sound.seek());
+      state.duration = helper.formatTime(state.sound.duration());
 
       if (state.sound.playing()) {
-        requestAnimationFrame(dispatch('progress'));
+        requestAnimationFrame(() => { dispatch('progress'); });
       }
     },
   },

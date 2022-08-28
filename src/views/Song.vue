@@ -66,7 +66,9 @@
 </template>
 
 <script>
-import { songsCollection, auth, commentsCollection } from '@/includes/firebase';
+import {
+  songsCollection, auth, commentsCollection, usersCollection,
+} from '@/includes/firebase';
 import store from '@/store/index';
 // import { mapActions } from 'vuex';
 import CommentComponent from '@/components/Comment.vue';
@@ -141,12 +143,24 @@ export default {
       const snapshots = await commentsCollection.where('sid', '==', this.$route.params.id).get();
       this.comments = [];
 
-      snapshots.forEach((doc) => [
+      snapshots.forEach((doc) => {
+        const userName = this.getName(doc.data().uid);
+
         this.comments.push({
           docID: doc.id,
           ...doc.data(),
-        }),
-      ]);
+          userName,
+        });
+      });
+    },
+    async getName(_uid) {
+      console.log(_uid);
+      const userSnapshot = await usersCollection.doc(_uid).get();
+      console.log(userSnapshot.data());
+
+      const userName = userSnapshot.data().name;
+
+      return userName;
     },
   },
   watch: {
