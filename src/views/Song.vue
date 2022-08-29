@@ -10,7 +10,9 @@
       <button @click.prevent="newSong(song)"
        type="button" class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full
         focus:outline-none">
-        <i class="fas fa-play"></i>
+        <i class="fas"
+          :class="{'fa-play': !playing || playing && !isCurrentSong,
+            'fa-pause': playing && isCurrentSong}"></i>
       </button>
       <div class="z-50 text-left ml-8">
         <!-- Song Info -->
@@ -102,10 +104,26 @@ export default {
         return a.datePosted.toDate() - b.datePosted.toDate();
       });
     },
+    playing() {
+      console.log('playing triggered');
+      return store.getters.playing;
+    },
+    isCurrentSong() {
+      if (store.getters.currentSong.docID === this.$route.params.id) {
+        console.log('isCurrentSong true');
+        return true;
+      }
+      console.log('isCurrentSong false');
+      return false;
+    },
   },
   methods: {
     newSong(_song) {
-      store.dispatch('newSong', _song);
+      if (this.isCurrentSong) {
+        store.commit('toggleAudio');
+      } else {
+        store.dispatch('newSong', _song);
+      }
     },
     async submitComment(values, context) {
       this.comment_in_submission = true;
