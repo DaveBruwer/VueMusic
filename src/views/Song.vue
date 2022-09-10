@@ -107,15 +107,12 @@ export default {
       });
     },
     playing() {
-      console.log('playing triggered');
       return store.getters.playing;
     },
     isCurrentSong() {
       if (store.getters.currentSong.docID === this.$route.params.id) {
-        console.log('isCurrentSong true');
         return true;
       }
-      console.log('isCurrentSong false');
       return false;
     },
   },
