@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-import AboutView from '@/views/AboutView.vue';
-import Manage from '@/views/Manage.vue';
+// import HomeView from '@/views/HomeView.vue';
+// import AboutView from '@/views/AboutView.vue';
+// import Manage from '@/views/Manage.vue';
+// import song from '@/views/Song.vue';
 import store from '@/store';
-import song from '@/views/Song.vue';
+
+const HomeView = () => import('@/views/HomeView.vue');
+const AboutView = () => import('@/views/AboutView.vue');
+const Manage = () => import('@/views/Manage.vue');
+const song = () => import('@/views/Song.vue');
 
 const routes = [
   {
@@ -51,8 +56,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // console.log(to.matched);
-
   if (!to.matched.some((record) => record.meta.requiresAuth)) {
     next();
     return;
