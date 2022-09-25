@@ -1,17 +1,22 @@
-import { createApp } from 'vue';
+import { createApp } from "vue";
 // eslint-disable-next-line import/no-unresolved
-import { registerSW } from 'virtual:pwa-register';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import './assets/tailwind.css';
-import './assets/main.css';
-import VeeValidatePlugin from './includes/validation';
-import { auth } from './includes/firebase';
-import icon from './directives/icon';
-import GlobalComponents from './includes/_globals';
+import { registerSW } from "virtual:pwa-register";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import "./assets/tailwind.css";
+import "./assets/main.css";
+import VeeValidatePlugin from "./includes/validation";
+import { auth } from "./includes/firebase";
+import icon from "./directives/icon";
+import GlobalComponents from "./includes/_globals";
+import progressBar from "./includes/progress-bar";
+
+import "nprogress/nprogress.css";
 
 registerSW({ immediate: true });
+
+progressBar(router);
 
 let app;
 
@@ -23,8 +28,8 @@ auth.onAuthStateChanged(() => {
     app.use(router);
     app.use(VeeValidatePlugin);
     app.use(GlobalComponents);
-    app.directive('icon', icon);
+    app.directive("icon", icon);
 
-    app.mount('#app');
+    app.mount("#app");
   }
 });
