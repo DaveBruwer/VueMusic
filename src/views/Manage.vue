@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import AppUpload from '@/components/Upload.vue';
-import { songsCollection, auth } from '@/includes/firebase';
-import CompositionItem from '@/components/CompositionItem.vue';
+import AppUpload from "@/components/Upload.vue";
+import { songsCollection, auth } from "@/includes/firebase";
+import CompositionItem from "@/components/CompositionItem.vue";
 
 export default {
-  name: 'view-manage',
+  name: "view-manage",
   components: {
     AppUpload,
     CompositionItem,
@@ -41,7 +41,7 @@ export default {
     };
   },
   async created() {
-    const snapshot = await songsCollection.where('uid', '==', auth.currentUser.uid).get();
+    const snapshot = await songsCollection.where("uid", "==", auth.currentUser.uid).get();
 
     snapshot.forEach(this.addSong);
   },
@@ -70,7 +70,7 @@ export default {
       next();
     } else {
       // eslint-disable-next-line no-restricted-globals, no-alert
-      const leave = confirm('You have unsaved changes. Are you sure you want to leave?');
+      const leave = confirm("You have unsaved changes. Are you sure you want to leave?");
       next(leave);
     }
   },

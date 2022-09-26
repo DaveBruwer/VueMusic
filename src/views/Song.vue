@@ -71,12 +71,12 @@
 <script>
 import {
   songsCollection, auth, commentsCollection, usersCollection,
-} from '@/includes/firebase';
-import store from '@/store/index';
-import CommentComponent from '@/components/Comment.vue';
+} from "@/includes/firebase";
+import store from "@/store/index";
+import CommentComponent from "@/components/Comment.vue";
 
 export default {
-  name: 'Song-View',
+  name: "Song-View",
   components: {
     CommentComponent,
   },
@@ -84,14 +84,14 @@ export default {
     return {
       song: {},
       schema: {
-        comment: 'required|min:3',
+        comment: "required|min:3",
       },
       comment_in_submission: false,
       comment_show_alert: false,
-      comment_alert_variant: 'bg-blue-500',
-      comment_alert_message: 'Please wait, your comment is being submitted.',
+      comment_alert_variant: "bg-blue-500",
+      comment_alert_message: "Please wait, your comment is being submitted.",
       comments: [],
-      sort: '1',
+      sort: "1",
     };
   },
   computed: {
@@ -100,7 +100,7 @@ export default {
     },
     sortedComments() {
       return this.comments.slice().sort((a, b) => {
-        if (this.sort === '1') {
+        if (this.sort === "1") {
           return b.datePosted.toDate() - a.datePosted.toDate();
         }
         return a.datePosted.toDate() - b.datePosted.toDate();
@@ -119,16 +119,16 @@ export default {
   methods: {
     newSong(_song) {
       if (this.isCurrentSong) {
-        store.commit('toggleAudio');
+        store.commit("toggleAudio");
       } else {
-        store.dispatch('newSong', _song);
+        store.dispatch("newSong", _song);
       }
     },
     async submitComment(values, context) {
       this.comment_in_submission = true;
       this.comment_show_alert = true;
-      this.comment_alert_variant = 'bg-blue-500';
-      this.comment_alert_message = 'Please wait, your comment is being submitted.';
+      this.comment_alert_variant = "bg-blue-500";
+      this.comment_alert_message = "Please wait, your comment is being submitted.";
 
       const comment = {
         content: values.comment,
@@ -148,13 +148,13 @@ export default {
       this.getComments();
 
       this.comment_in_submission = false;
-      this.comment_alert_variant = 'bg-green-500';
-      this.comment_alert_message = 'Comment added!';
+      this.comment_alert_variant = "bg-green-500";
+      this.comment_alert_message = "Comment added!";
 
       context.resetForm();
     },
     async getComments() {
-      const snapshots = await commentsCollection.where('sid', '==', this.$route.params.id).get();
+      const snapshots = await commentsCollection.where("sid", "==", this.$route.params.id).get();
       this.comments = [];
 
       snapshots.forEach((doc) => {
@@ -191,14 +191,14 @@ export default {
 
     next(async (vm) => {
       if (!docSnapshot.exists) {
-        vm.$router.push({ name: 'home' });
+        vm.$router.push({ name: "home" });
         return;
       }
 
       const { sort } = vm.$route.query;
 
       // eslint-disable-next-line no-param-reassign
-      vm.sort = sort === '1' || sort === '2' ? sort : '1';
+      vm.sort = sort === "1" || sort === "2" ? sort : "1";
 
       // eslint-disable-next-line no-param-reassign
       vm.song = docSnapshot.data();

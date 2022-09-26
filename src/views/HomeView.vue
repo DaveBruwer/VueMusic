@@ -41,17 +41,17 @@
 </template>
 
 <script>
-import { songsCollection } from '@/includes/firebase';
-import AppSongItem from '@/components/SongItem.vue';
-import IconSecondary from '@/directives/icon-secondary';
+import { songsCollection } from "@/includes/firebase";
+import AppSongItem from "@/components/SongItem.vue";
+import IconSecondary from "@/directives/icon-secondary";
 
 export default {
-  name: 'Home-View',
+  name: "Home-View",
   components: {
     AppSongItem,
   },
   directives: {
-    'icon-secondary': IconSecondary,
+    "icon-secondary": IconSecondary,
   },
   data() {
     return {
@@ -62,10 +62,10 @@ export default {
   },
   async created() {
     this.getSongs();
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     async getSongs() {
@@ -78,9 +78,9 @@ export default {
       let snapshots;
       if (this.songs.length) {
         const lastDoc = await songsCollection.doc(this.songs[this.songs.length - 1].docID).get();
-        snapshots = await songsCollection.orderBy('modified_name').startAfter(lastDoc).limit(this.maxPerPage).get();
+        snapshots = await songsCollection.orderBy("modified_name").startAfter(lastDoc).limit(this.maxPerPage).get();
       } else {
-        snapshots = await songsCollection.orderBy('modified_name').limit(this.maxPerPage).get();
+        snapshots = await songsCollection.orderBy("modified_name").limit(this.maxPerPage).get();
       }
       snapshots.forEach((document) => {
         this.songs.push({

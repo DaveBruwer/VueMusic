@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'Song-Item',
+  name: "Song-Item",
   props: {
     song: {
       type: Object,

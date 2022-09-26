@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import { storage, auth, songsCollection } from '@/includes/firebase';
+import { storage, auth, songsCollection } from "@/includes/firebase";
 
 export default {
-  name: 'upload-component',
+  name: "upload-component",
   data() {
     return {
       is_dragover: false,
@@ -66,7 +66,7 @@ export default {
       const files = $event.dataTransfer ? [...$event.dataTransfer.files] : [...$event.target.files];
 
       files.forEach((file) => {
-        if (file.type !== 'audio/mpeg') {
+        if (file.type !== "audio/mpeg") {
           return;
         }
 
@@ -78,9 +78,9 @@ export default {
             task: {},
             current_progress: 1000,
             name: file.name,
-            variant: 'bg-red-400',
-            icon: 'fas fa-times',
-            text_class: 'text-red-400',
+            variant: "bg-red-400",
+            icon: "fas fa-times",
+            text_class: "text-red-400",
           });
           return;
         }
@@ -93,18 +93,18 @@ export default {
           task,
           current_progress: 0,
           name: file.name,
-          variant: 'bg-blue-400',
-          icon: 'fas fa-spinner fa-spin',
-          text_class: '',
+          variant: "bg-blue-400",
+          icon: "fas fa-spinner fa-spin",
+          text_class: "",
         }) - 1;
 
-        task.on('state_changed', (snapshot) => {
+        task.on("state_changed", (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           this.uploads[uploadIndex].current_progress = progress;
         }, (error) => {
-          this.uploads[uploadIndex].variant = 'bg-red-400';
-          this.uploads[uploadIndex].icon = 'fas fa-times';
-          this.uploads[uploadIndex].text_class = 'text-red-400';
+          this.uploads[uploadIndex].variant = "bg-red-400";
+          this.uploads[uploadIndex].icon = "fas fa-times";
+          this.uploads[uploadIndex].text_class = "text-red-400";
           console.log(error);
         }, async () => {
           const song = {
@@ -112,7 +112,7 @@ export default {
             display_name: auth.currentUser.displayName,
             original_name: task.snapshot.ref.name,
             modified_name: task.snapshot.ref.name,
-            genre: '',
+            genre: "",
             comment_count: 0,
           };
 
@@ -122,9 +122,9 @@ export default {
 
           this.addSong(songSnapshot);
 
-          this.uploads[uploadIndex].variant = 'bg-green-400';
-          this.uploads[uploadIndex].icon = 'fas fa-check';
-          this.uploads[uploadIndex].text_class = 'text-green-400';
+          this.uploads[uploadIndex].variant = "bg-green-400";
+          this.uploads[uploadIndex].icon = "fas fa-check";
+          this.uploads[uploadIndex].text_class = "text-green-400";
         });
       });
     },

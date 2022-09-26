@@ -34,37 +34,37 @@
 
 <script>
 export default {
-  name: 'login-form',
+  name: "login-form",
   data() {
     return {
       schema: {
-        email: 'required|email',
-        password: 'required|min:3|max:100',
+        email: "required|email",
+        password: "required|min:3|max:100",
       },
       login_in_submission: false,
       login_show_alert: false,
-      login_alert_variant: 'bg-blue-500',
-      login_alert_msg: 'Please wait...',
+      login_alert_variant: "bg-blue-500",
+      login_alert_msg: "Please wait...",
     };
   },
   methods: {
     async login_login(values) {
       this.login_show_alert = true;
       this.login_in_submission = true;
-      this.login_alert_variant = 'bg-blue-500';
-      this.login_alert_msg = 'Please wait...';
+      this.login_alert_variant = "bg-blue-500";
+      this.login_alert_msg = "Please wait...";
 
       try {
-        await this.$store.dispatch('login', values);
+        await this.$store.dispatch("login", values);
       } catch (error) {
         this.login_in_submission = false;
-        this.login_alert_variant = 'bg-red-500';
-        this.login_alert_msg = 'Invalid login details.';
+        this.login_alert_variant = "bg-red-500";
+        this.login_alert_msg = "Invalid login details.";
         return;
       }
 
-      this.login_alert_variant = 'bg-green-500';
-      this.login_alert_msg = 'You have been successfully logged in.';
+      this.login_alert_variant = "bg-green-500";
+      this.login_alert_msg = "You have been successfully logged in.";
       window.location.reload();
     },
   },

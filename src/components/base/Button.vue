@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'base-button',
+  name: "base-button",
 };
 </script>

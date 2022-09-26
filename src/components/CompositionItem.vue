@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import { songsCollection, storage } from '@/includes/firebase';
+import { songsCollection, storage } from "@/includes/firebase";
 
 export default {
-  name: 'composition-item',
+  name: "composition-item",
   props: {
     song: {
       type: Object,
@@ -81,21 +81,21 @@ export default {
       formSongTitle: this.song.modified_name,
       formSongGenre: this.song.genre,
       schema: {
-        modified_name: 'required',
-        genre: 'alpha_spaces',
+        modified_name: "required",
+        genre: "alpha_spaces",
       },
       in_submission: false,
       show_alert: false,
-      alert_variant: 'bg-blue-500',
-      alert_message: 'Please wait! Updating song info.',
+      alert_variant: "bg-blue-500",
+      alert_message: "Please wait! Updating song info.",
     };
   },
   methods: {
     async submit(values) {
       this.in_submission = true;
       this.show_alert = true;
-      this.alert_variant = 'bg-blue-500';
-      this.alert_message = 'Please wait! Updating song info.';
+      this.alert_variant = "bg-blue-500";
+      this.alert_message = "Please wait! Updating song info.";
 
       console.log(values);
 
@@ -103,8 +103,8 @@ export default {
         await songsCollection.doc(this.song.docID).update(values);
       } catch (error) {
         this.in_submission = false;
-        this.alert_variant = 'bg-red-500';
-        this.alert_message = 'Something went wrong! Please try again.';
+        this.alert_variant = "bg-red-500";
+        this.alert_message = "Something went wrong! Please try again.";
         return;
       }
 
@@ -112,8 +112,8 @@ export default {
       this.updateUnsavedFlag(false);
 
       this.in_submission = false;
-      this.alert_variant = 'bg-green-500';
-      this.alert_message = 'Success!';
+      this.alert_variant = "bg-green-500";
+      this.alert_message = "Success!";
     },
     async deleteSong() {
       const storageRef = storage.ref();
@@ -126,7 +126,7 @@ export default {
       this.removeSong(this.songIndex);
     },
   },
-  emits: ['song-update'],
+  emits: ["song-update"],
 };
 </script>
 

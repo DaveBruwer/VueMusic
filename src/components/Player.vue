@@ -43,16 +43,16 @@
 </template>
 
 <script>
-import store from '@/store/index';
+import store from "@/store/index";
 
 export default {
-  name: 'Player-Component',
+  name: "Player-Component",
   methods: {
     toggleAudio() {
-      store.dispatch('toggleAudio');
+      store.dispatch("toggleAudio");
     },
     updateSeek($event) {
-      store.dispatch('updateSeek', $event);
+      store.dispatch("updateSeek", $event);
     },
   },
   computed: {

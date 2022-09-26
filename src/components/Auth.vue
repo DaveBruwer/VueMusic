@@ -57,15 +57,15 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
-import AppLoginForm from './LoginForm.vue';
-import AppRegisterForm from './RegistrationForm.vue';
+import { mapMutations, mapState } from "vuex";
+import AppLoginForm from "./LoginForm.vue";
+import AppRegisterForm from "./RegistrationForm.vue";
 
 export default {
-  name: 'App-Auth',
+  name: "App-Auth",
   data() {
     return {
-      tab: 'login',
+      tab: "login",
     };
   },
   components: {
@@ -73,10 +73,10 @@ export default {
     AppRegisterForm,
   },
   computed: {
-    ...mapState(['authModalShow']),
+    ...mapState(["authModalShow"]),
   },
   methods: {
-    ...mapMutations(['toggleAuthModal']),
+    ...mapMutations(["toggleAuthModal"]),
   },
 };
 </script>
