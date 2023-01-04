@@ -1,3 +1,6 @@
+An online music player Spotify clone
+
+
 # music
 
 ## Project setup
